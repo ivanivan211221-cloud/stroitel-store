@@ -1088,55 +1088,52 @@ h2 {
 }
 .contacts-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
-  gap: 24px;
-  align-items: start;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
 }
-.contacts-cards {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.contact-card {
+  display: grid;
+  gap: 10px;
+  min-height: 168px;
+  padding: 22px;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
 }
-.contacts-info-card {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  padding: 16px 18px;
+.contact-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+  border-color: rgba(234, 179, 8, 0.45);
 }
-.contacts-info-icon {
-  flex-shrink: 0;
+.contact-card svg {
   width: 48px;
   height: 48px;
-  border-radius: 12px;
-  display: grid;
-  place-items: center;
-  background: var(--ink);
-  color: #fefce8;
+  padding: 12px;
+  border-radius: 14px;
+  background: var(--accent-soft);
+  color: var(--accent-text);
 }
-.contacts-info-body {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  min-width: 0;
-}
-.contacts-info-label {
+.contact-label {
+  margin: 4px 0 0;
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
+  color: var(--muted);
 }
-.contacts-info-main {
+.contact-main {
+  margin: 0;
   font-size: 1.05rem;
   font-weight: 800;
   color: var(--ink);
 }
-a.contacts-info-main:hover {
+a.contact-main:hover {
   color: var(--accent-text);
 }
-.contacts-info-sub {
+.contact-sub {
+  margin: 0;
   font-size: 13px;
   font-weight: 500;
 }
@@ -1442,9 +1439,9 @@ a.contacts-info-main:hover {
 :root[data-theme="dark"] .cart-summary-free {
   color: #86efac;
 }
-:root[data-theme="dark"] .contacts-info-icon {
-  background: #44403c;
-  color: #fefce8;
+:root[data-theme="dark"] .contact-card svg {
+  background: rgba(250, 204, 21, 0.14);
+  color: #fef08a;
 }
 
 .media-grid {
