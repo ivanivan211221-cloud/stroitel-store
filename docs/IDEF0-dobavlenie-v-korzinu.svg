@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="440" viewBox="0 0 720 440">
+  <defs>
+    <marker id="in" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1e3a8a"/>
+    </marker>
+  </defs>
+  <rect width="720" height="440" fill="#fafbff"/>
+  <rect x="220" y="150" width="280" height="140" fill="#ffffff" stroke="#1e3a8a" stroke-width="2"/>
+  <text x="360" y="205" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="600" fill="#111827">&#x414;&#x43e;&#x431;&#x430;&#x432;&#x43b;&#x435;&#x43d;&#x438;&#x435;&#x20;&#x442;&#x43e;&#x432;&#x430;&#x440;&#x430;</text>
+  <text x="360" y="230" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="600" fill="#111827">&#x432;&#x20;&#x43a;&#x43e;&#x440;&#x437;&#x438;&#x43d;&#x443;</text>
+  <line x1="35" y1="220" x2="218" y2="220" stroke="#1e3a8a" stroke-width="2" marker-end="url(#in)"/>
+  <text x="38" y="205" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#374151">&#x043e;&#x0431;&#x044c;&#x0435;&#x043a;&#x0442;&#x20;&#x0442;&#x043e;&#x0432;&#x0430;&#x0440;&#x0430;</text>
+  <text x="38" y="245" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#374151">&#x043a;&#x043b;&#x438;&#x043a;&#x20;&#x043f;&#x043e;&#x20;&#x043a;&#x043d;&#x043e;&#x043f;&#x043a;&#x435;</text>
+  <text x="115" y="275" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#111827">&#x412;&#x445;&#x43e;&#x434;&#x44b;</text>
+  <line x1="295" y1="48" x2="295" y2="148" stroke="#1e3a8a" stroke-width="2" marker-end="url(#in)"/>
+  <line x1="425" y1="48" x2="425" y2="148" stroke="#1e3a8a" stroke-width="2" marker-end="url(#in)"/>
+  <text x="360" y="22" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#111827">&#x423;&#x43f;&#x440;&#x430;&#x432;&#x43b;&#x435;&#x43d;&#x438;&#x435;</text>
+  <text x="200" y="40" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#374151">&#x441;&#x442;&#x440;&#x443;&#x43a;&#x442;&#x443;&#x440;&#x430;&#x20;&#x43f;&#x43e;&#x437;&#x438;&#x446;&#x438;&#x438;&#x3a;&#x20;&#x69;&#x64;&#x2c;&#x20;&#x71;&#x74;&#x79;&#x2c;&#x20;&#x446;&#x435;&#x43d;&#x430;</text>
+  <text x="360" y="58" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#374151">&#x043a;&#x043b;&#x44e;&#x447;&#x20;&#x6c;&#x6f;&#x63;&#x61;&#x6c;&#x53;&#x74;&#x6f;&#x72;&#x61;&#x67;&#x65;&#x3a;&#x20;&#x68;&#x6f;&#x7a;&#x79;&#x61;&#x6e;&#x5f;&#x63;&#x61;&#x72;&#x74;</text>
+  <line x1="295" y1="392" x2="295" y2="292" stroke="#1e3a8a" stroke-width="2" marker-end="url(#in)"/>
+  <line x1="425" y1="392" x2="425" y2="292" stroke="#1e3a8a" stroke-width="2" marker-end="url(#in)"/>
+  <text x="360" y="430" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#111827">&#x41c;&#x435;&#x445;&#x430;&#x43d;&#x438;&#x437;&#x43c;</text>
+  <text x="150" y="418" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#374151">React, useShop, ShopContext.jsx</text>
+  <text x="400" y="418" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#374151">localStorage, react-hot-toast</text>
+  <line x1="502" y1="220" x2="685" y2="220" stroke="#1e3a8a" stroke-width="2" marker-end="url(#in)"/>
+  <text x="520" y="205" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#374151">&#x043e;&#x0431;&#x043d;&#x043e;&#x0432;&#x043b;&#x451;&#x043d;&#x043d;&#x44b;&#x439;&#x20;&#x043c;&#x430;&#x441;&#x441;&#x438;&#x432;&#x20;&#x43a;&#x43e;&#x440;&#x437;&#x438;&#x43d;&#x44b;</text>
+  <text x="520" y="238" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#374151">toast: &#x422;&#x43e;&#x432;&#x430;&#x440;&#x20;&#x434;&#x43e;&#x431;&#x430;&#x432;&#x43b;&#x435;&#x43d;&#x20;&#x432;&#x20;&#x43a;&#x43e;&#x440;&#x437;&#x438;&#x43d;&#x443;</text>
+  <text x="555" y="275" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#111827">&#x412;&#x44b;&#x445;&#x43e;&#x434;&#x44b;</text>
+</svg>

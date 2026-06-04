@@ -1,0 +1,20 @@
+# Локальный PostgreSQL для разработки и диплома (без установки Postgres в систему).
+# Запуск из корня репозитория:  docker compose up -d
+# Остановка:                 docker compose down
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: hozyan-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: hozyan
+      POSTGRES_PASSWORD: hozyan_local
+      POSTGRES_DB: hozyan
+    ports:
+      # 5433 снаружи — чтобы не конфликтовать с уже установленным Postgres на 5432
+      - "5433:5432"
+    volumes:
+      - hozyan_pgdata:/var/lib/postgresql/data
+
+volumes:
+  hozyan_pgdata:

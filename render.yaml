@@ -1,0 +1,43 @@
+# Рекомендуемый деплой: один Web-сервис (API + статика) + PostgreSQL.
+# Фронт собирается с VITE_API_URL=/api — запросы идут на тот же домен, CORS не нужен.
+#
+# Render Dashboard → New → Blueprint → подключить репозиторий.
+# После первого деплоя: Shell сервиса →  cd server && npm run seed  (один раз).
+#
+# Свой домен: Settings → Custom Domain. PUBLIC_API_URL подставится из RENDER_EXTERNAL_URL.
+
+databases:
+  - name: hozyan-db
+    databaseName: hozyan
+    user: hozyan
+    plan: free
+
+services:
+  - type: web
+    name: hozyan
+    runtime: node
+    rootDir: .
+    buildCommand: npm run render-build
+    startCommand: npm run render-start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: hozyan-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DISABLE_FILE_UPLOAD
+        value: "true"
+      - key: SEED_IF_EMPTY
+        value: "true"
+      - key: SITE_PHONE
+        value: "+7 (495) 123-45-67"
+      - key: SITE_PHONE_TEL
+        value: "+74951234567"
+      - key: SITE_EMAIL
+        value: info@hozyan.ru
+      - key: SITE_ADDRESS
+        value: "с. Беляевка, ул. Торговая, д. 13"

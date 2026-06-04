@@ -1,0 +1,47 @@
+# Альтернатива: отдельно API (Node) и статический фронт (два URL).
+# Используйте, если нужен CDN для фронта. Переименуйте в render.yaml или укажите при Blueprint.
+#
+# После деплоя замените URL в CORS_ORIGIN и VITE_API_URL на реальные из панели Render.
+
+databases:
+  - name: hozyan-db
+    databaseName: hozyan
+    user: hozyan
+
+services:
+  - type: web
+    name: hozyan-api
+    runtime: node
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: hozyan-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGIN
+        sync: false
+      - key: DISABLE_FILE_UPLOAD
+        value: "true"
+      - key: PUBLIC_API_URL
+        sync: false
+
+  - type: web
+    name: hozyan-client
+    runtime: static
+    rootDir: client
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        sync: false
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
