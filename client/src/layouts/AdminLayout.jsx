@@ -10,7 +10,7 @@ export default function AdminLayout() {
     <div className="admin-grid">
       <aside className="admin-sidebar glass">
         <h3>Панель управления</h3>
-        <NavLink to="/admin">
+        <NavLink to="/admin" end>
           <BarChart3 size={16} /> Дашборд
         </NavLink>
         <NavLink to="/admin/products">
