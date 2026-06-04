@@ -39,9 +39,7 @@ app.use(
         imgSrc: [
           "'self'",
           "data:",
-          "https://images.unsplash.com",
-          "https://source.unsplash.com",
-          "https://loremflickr.com",
+          "https:",
         ],
       },
     },
