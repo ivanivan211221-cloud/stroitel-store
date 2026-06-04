@@ -16,6 +16,7 @@ services:
   - type: web
     name: hozyan
     runtime: node
+    plan: free
     rootDir: .
     buildCommand: npm run render-build
     startCommand: npm run render-start
