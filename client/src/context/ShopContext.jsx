@@ -27,7 +27,7 @@ export function ShopProvider({ children }) {
       setFavorites(data);
       persist("hozyan_favorites", data);
     } catch {
-      /* guest fallback */
+      /* Favorites are optional for guests. */
     }
   }, [user]);
 
@@ -36,25 +36,31 @@ export function ShopProvider({ children }) {
   }, [syncFavorites]);
 
   const addToCart = (product, qty = 1) => {
-    const next = [...cart];
-    const idx = next.findIndex((i) => i.id === product.id);
-    if (idx >= 0) next[idx].qty += qty;
-    else next.push({ ...product, qty });
-    setCart(next);
-    persist("hozyan_cart", next);
+    setCart((current) => {
+      const exists = current.some((item) => item.id === product.id);
+      const next = exists
+        ? current.map((item) => (item.id === product.id ? { ...item, qty: item.qty + qty } : item))
+        : [...current, { ...product, qty }];
+      persist("hozyan_cart", next);
+      return next;
+    });
     toast.success("Товар добавлен в корзину");
   };
 
   const setQty = (id, qty) => {
-    const next = cart.map((i) => (i.id === id ? { ...i, qty: Math.max(1, qty) } : i));
-    setCart(next);
-    persist("hozyan_cart", next);
+    setCart((current) => {
+      const next = current.map((item) => (item.id === id ? { ...item, qty: Math.max(1, qty) } : item));
+      persist("hozyan_cart", next);
+      return next;
+    });
   };
 
   const removeFromCart = (id) => {
-    const next = cart.filter((i) => i.id !== id);
-    setCart(next);
-    persist("hozyan_cart", next);
+    setCart((current) => {
+      const next = current.filter((item) => item.id !== id);
+      persist("hozyan_cart", next);
+      return next;
+    });
   };
 
   const toggleFavorite = async (product) => {
@@ -91,10 +97,11 @@ export function ShopProvider({ children }) {
     persist("hozyan_cart", []);
   };
 
-  const total = cart.reduce((sum, i) => sum + Number(i.price) * i.qty, 0);
+  const cartCount = cart.reduce((sum, item) => sum + Number(item.qty || 0), 0);
+  const total = cart.reduce((sum, item) => sum + Number(item.price) * Number(item.qty || 0), 0);
   const value = useMemo(
-    () => ({ cart, favorites, addToCart, setQty, removeFromCart, toggleFavorite, total, clearCart, syncFavorites }),
-    [cart, favorites, total, syncFavorites]
+    () => ({ cart, cartCount, favorites, addToCart, setQty, removeFromCart, toggleFavorite, total, clearCart, syncFavorites }),
+    [cart, cartCount, favorites, total, syncFavorites]
   );
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
 }

@@ -9,7 +9,7 @@ import { http } from "../api/http";
 
 export default function MainLayout() {
   const { user, logout } = useAuth();
-  const { cart, favorites } = useShop();
+  const { cartCount, favorites } = useShop();
   const [site, setSite] = useState(null);
   const [footerCategories, setFooterCategories] = useState([]);
 
@@ -54,7 +54,7 @@ export default function MainLayout() {
               <NavLink to="/cart" className="nav-cart">
                 <ShoppingBag size={18} strokeWidth={2} />
                 <span>Корзина</span>
-                {cart.length > 0 && <span className="cart-badge">{cart.length}</span>}
+                {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
               </NavLink>
               <NavLink to="/account">
                 <User size={18} strokeWidth={2} /> Кабинет
