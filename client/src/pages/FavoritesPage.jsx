@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import { Heart } from "lucide-react";
+import { Heart, Trash2 } from "lucide-react";
 import { useShop } from "../context/ShopContext";
 import ProductCard from "../components/ProductCard";
 
 export default function FavoritesPage() {
-  const { favorites } = useShop();
+  const { favorites, removeFavorite } = useShop();
 
   if (!favorites.length) {
     return (
@@ -25,7 +25,13 @@ export default function FavoritesPage() {
       </h1>
       <div className="grid products-grid">
         {favorites.map((p) => (
-          <ProductCard key={p.id} product={p} />
+          <div className="favorite-card-wrap" key={p.id}>
+            <ProductCard product={p} />
+            <button type="button" className="btn btn-outline favorite-remove-btn" onClick={() => removeFavorite(p.id)}>
+              <Trash2 size={16} />
+              Убрать из избранного
+            </button>
+          </div>
         ))}
       </div>
     </div>

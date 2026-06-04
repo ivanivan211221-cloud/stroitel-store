@@ -13,6 +13,8 @@ const fromStorage = (key, fallback) => {
   }
 };
 
+const sameId = (a, b) => Number(a) === Number(b);
+
 export function ShopProvider({ children }) {
   const { user } = useAuth();
   const [cart, setCart] = useState(fromStorage("hozyan_cart", []));
@@ -37,9 +39,9 @@ export function ShopProvider({ children }) {
 
   const addToCart = (product, qty = 1) => {
     setCart((current) => {
-      const exists = current.some((item) => item.id === product.id);
+      const exists = current.some((item) => sameId(item.id, product.id));
       const next = exists
-        ? current.map((item) => (item.id === product.id ? { ...item, qty: item.qty + qty } : item))
+        ? current.map((item) => (sameId(item.id, product.id) ? { ...item, qty: Number(item.qty || 0) + qty } : item))
         : [...current, { ...product, qty }];
       persist("hozyan_cart", next);
       return next;
@@ -49,7 +51,7 @@ export function ShopProvider({ children }) {
 
   const setQty = (id, qty) => {
     setCart((current) => {
-      const next = current.map((item) => (item.id === id ? { ...item, qty: Math.max(1, qty) } : item));
+      const next = current.map((item) => (sameId(item.id, id) ? { ...item, qty: Math.max(1, qty) } : item));
       persist("hozyan_cart", next);
       return next;
     });
@@ -57,39 +59,68 @@ export function ShopProvider({ children }) {
 
   const removeFromCart = (id) => {
     setCart((current) => {
-      const next = current.filter((item) => item.id !== id);
+      const next = current.filter((item) => !sameId(item.id, id));
       persist("hozyan_cart", next);
       return next;
     });
   };
 
-  const toggleFavorite = async (product) => {
-    const exists = favorites.some((f) => f.id === product.id);
+  const isFavorite = (productId) => favorites.some((item) => sameId(item.id, productId));
+
+  const removeFavorite = async (productOrId) => {
+    const productId = typeof productOrId === "object" ? productOrId.id : productOrId;
+    if (!productId) return;
+
     if (user) {
       try {
-        if (exists) {
-          await http.delete(`/favorites/${product.id}`);
-          const next = favorites.filter((f) => f.id !== product.id);
-          setFavorites(next);
+        await http.delete(`/favorites/${productId}`);
+        setFavorites((current) => {
+          const next = current.filter((item) => !sameId(item.id, productId));
           persist("hozyan_favorites", next);
-          toast.success("Удалено из избранного");
-        } else {
-          await http.post(`/favorites/${product.id}`);
-          const next = [...favorites, product];
-          setFavorites(next);
+          return next;
+        });
+        toast.success("Удалено из избранного");
+      } catch {
+        toast.error("Не удалось удалить из избранного");
+      }
+      return;
+    }
+
+    setFavorites((current) => {
+      const next = current.filter((item) => !sameId(item.id, productId));
+      persist("hozyan_favorites", next);
+      return next;
+    });
+    toast.success("Удалено из избранного");
+  };
+
+  const toggleFavorite = async (product) => {
+    if (isFavorite(product.id)) {
+      await removeFavorite(product.id);
+      return;
+    }
+
+    if (user) {
+      try {
+        await http.post(`/favorites/${product.id}`);
+        setFavorites((current) => {
+          const next = current.some((item) => sameId(item.id, product.id)) ? current : [...current, product];
           persist("hozyan_favorites", next);
-          toast.success("Добавлено в избранное");
-        }
-        return;
+          return next;
+        });
+        toast.success("Добавлено в избранное");
       } catch {
         toast.error("Не удалось обновить избранное");
-        return;
       }
+      return;
     }
-    const next = exists ? favorites.filter((f) => f.id !== product.id) : [...favorites, product];
-    setFavorites(next);
-    persist("hozyan_favorites", next);
-    toast.success(exists ? "Удалено из избранного" : "Добавлено в избранное");
+
+    setFavorites((current) => {
+      const next = current.some((item) => sameId(item.id, product.id)) ? current : [...current, product];
+      persist("hozyan_favorites", next);
+      return next;
+    });
+    toast.success("Добавлено в избранное");
   };
 
   const clearCart = () => {
@@ -99,10 +130,25 @@ export function ShopProvider({ children }) {
 
   const cartCount = cart.reduce((sum, item) => sum + Number(item.qty || 0), 0);
   const total = cart.reduce((sum, item) => sum + Number(item.price) * Number(item.qty || 0), 0);
+
   const value = useMemo(
-    () => ({ cart, cartCount, favorites, addToCart, setQty, removeFromCart, toggleFavorite, total, clearCart, syncFavorites }),
+    () => ({
+      cart,
+      cartCount,
+      favorites,
+      addToCart,
+      setQty,
+      removeFromCart,
+      isFavorite,
+      removeFavorite,
+      toggleFavorite,
+      total,
+      clearCart,
+      syncFavorites,
+    }),
     [cart, cartCount, favorites, total, syncFavorites]
   );
+
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
 }
 

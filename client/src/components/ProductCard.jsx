@@ -6,8 +6,8 @@ import { useShop } from "../context/ShopContext";
 export default function ProductCard({ product }) {
   const fallbackImage =
     "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1200&auto=format&fit=crop";
-  const { addToCart, favorites, toggleFavorite } = useShop();
-  const isFav = favorites.some((f) => f.id === product.id);
+  const { addToCart, isFavorite, toggleFavorite } = useShop();
+  const isFav = isFavorite(product.id);
 
   return (
     <motion.article
@@ -38,10 +38,15 @@ export default function ProductCard({ product }) {
         </div>
       </div>
       <div className="row gap-sm">
-        <button className="btn btn-primary" onClick={() => addToCart(product)}>
+        <button type="button" className="btn btn-primary" onClick={() => addToCart(product)}>
           <ShoppingCart size={16} /> В корзину
         </button>
-        <button className={`icon-btn ${isFav ? "active" : ""}`} onClick={() => toggleFavorite(product)}>
+        <button
+          type="button"
+          className={`icon-btn ${isFav ? "active" : ""}`}
+          onClick={() => toggleFavorite(product)}
+          aria-label={isFav ? "Убрать из избранного" : "Добавить в избранное"}
+        >
           <Heart size={16} />
         </button>
       </div>
